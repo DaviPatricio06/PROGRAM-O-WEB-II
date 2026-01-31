@@ -1,40 +1,31 @@
-class Exams {
-    constructor() {
-        this.questions = [];
+class Exam {
+    constructor(question) {
+        this.question = question;
     }
 
-    addQuestion(num, peso, respostaCerta) {
-    this.questions.push({
-        numero: num,
-        peso: peso,
-        certa: respostaCerta,
-    });
-    }
+    calculateScore(studentAnswer) {
+        let score = 0;
 
-    grade(respostasAluno) {
-    let nota = 0;
-
-    for (let i = 0; i < this.questions.length; i++) {
-        let questao = this.questions[i];
-        let respostaAluno = respostasAluno[i];
-
-        if (respostaAluno === questao.certa) {
-        nota = nota + questao.peso;
+        for (let i = 0; i < this.question.length; i++) {
+            if (studentAnswer[i] === this.question[i].resposta) {
+                score += this.questions[i].peso;
+            }
         }
-    }
 
-    return nota;
+        return score;
     }
 }
 
-let prova = new Exams();
-prova.addQuestion(1, 2, "a");
-prova.addQuestion(2, 2, "b");
-prova.addQuestion(3, 2, "a");
-prova.addQuestion(4, 2, "c");
-prova.addQuestion(5, 2, "d");
+const exam = new Exam([
+    { peso: 2, resposta: 'a' },
+    { peso: 2, resposta: 'b' },
+    { peso: 2, resposta: 'a' },
+    { peso: 2, resposta: 'c' },
+    { peso: 2, resposta: 'd' }
+]);
 
-let respostas = ["a", "b", "b", "b", "b"];
-let notaFinal = prova.grade(respostas);
+const studentAnswers = ['a', 'b', 'b', 'b', 'b'];
 
-console.log("Nota final do aluno: " + notaFinal);
+const finalScore = exam.calculateScore(studentAnswers);
+
+console.log(`Nota final do aluno: ${finalScore}`);
